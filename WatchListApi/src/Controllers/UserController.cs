@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WatchList.Models;
@@ -37,7 +35,6 @@ namespace WatchList.Controllers
             _ctx.SaveChanges();
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]User value)
         {
@@ -49,7 +46,6 @@ namespace WatchList.Controllers
             _ctx.SaveChanges();
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.TestHost;
 using Newtonsoft.Json;
 using WatchList.Models;
 using Xunit;
+using System.Linq;
 
 namespace WatchList.Test
 {
@@ -17,7 +18,7 @@ namespace WatchList.Test
 
         public UserTests()
         {
-            var webHost = new WebHostBuilder().UseStartup<Startup>();
+            var webHost = new WebHostBuilder().UseStartup<FakeStartup>();
             _testServer = new TestServer(webHost);
         }
 
@@ -45,9 +46,9 @@ namespace WatchList.Test
                 var usersResult = await client.GetAsync("/api/User");
                 var usersJson = await usersResult.Content.ReadAsStringAsync();
 
-                var users = (IEnumerable<User>)JsonConvert.DeserializeObject(usersJson);
+                var users = JsonConvert.DeserializeObject<IEnumerable<User>>(usersJson);
 
-                Assert.True(true);
+                Assert.Contains(users, u => u.Email == user.Email);
             }
         }
     }
