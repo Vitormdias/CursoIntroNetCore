@@ -18,7 +18,7 @@ namespace WatchList.Models.Mapping
             builder.Property(m => m.Grade).HasDefaultValue(3);
             builder.Property(m => m.Watched);
 
-            builder.HasOne(m => m.User).WithMany(u => u.Movies).HasForeignKey(u => u.Id);
+            builder.HasOne(m => m.User).WithMany(u => u.Movies).HasForeignKey(u => u.UserId);
         }
     }
 }

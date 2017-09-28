@@ -6,7 +6,7 @@ using WatchList.Models;
 
 namespace WatchList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/User")]
     public class MovieController
     {
         private readonly MovieContext _ctx;
@@ -16,29 +16,29 @@ namespace WatchList.Controllers
             _ctx = ctx;
         }
 
-        private User GetUser(int id) => _ctx.Users.FirstOrDefault(u => u.Id == id);
-
-        [HttpGet("{userId}")]
+        [HttpGet("{userId}/Movie")]
         public IEnumerable<Movie> Get(int userId)
         {
-            return GetUser(userId).Movies;
+            return _ctx.Movies.Where(m => m.UserId == userId).ToList();
         }
 
-        [HttpGet("{userId}/{id}")]
+        [HttpGet("{userId}/Movie/{id}")]
         public Movie Get(int userId, int id)
         {
-            return GetUser(userId).Movies.FirstOrDefault(m => m.Id == id);
+            return _ctx.Movies.FirstOrDefault(m => m.UserId == userId && m.Id == id);
         }
 
-        [HttpPost("{userId}")]
-        public void Post(int userId, [FromBody]Movie movie)
+        [HttpPost("{userId}/Movie")]
+        public int Post(int userId, [FromBody]Movie movie)
         {
             movie.UserId = userId;
             _ctx.Movies.Add(movie);
             _ctx.SaveChanges();
+
+            return movie.Id;
         }
 
-        [HttpPut("{userId}/{id}")]
+        [HttpPut("{userId}/Movie/{id}")]
         public void Put(int userId, int id, [FromBody]Movie value)
         {
             var movie = Get(userId, id);
@@ -51,7 +51,7 @@ namespace WatchList.Controllers
             _ctx.SaveChanges();
         }
 
-        [HttpDelete("{userId}/{id}")]
+        [HttpDelete("{userId}/Movie/{id}")]
         public void Delete(int userId, int id)
         {
             var movie = Get(userId, id);

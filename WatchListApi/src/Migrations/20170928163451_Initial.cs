@@ -39,12 +39,17 @@ namespace WatchList.Migrations
                 {
                     table.PrimaryKey("PK_Movies", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Movies_Users_Id",
-                        column: x => x.Id,
+                        name: "FK_Movies_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Movies_UserId",
+                table: "Movies",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

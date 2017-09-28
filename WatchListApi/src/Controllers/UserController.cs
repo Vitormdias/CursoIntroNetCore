@@ -6,7 +6,7 @@ using WatchList.Models;
 
 namespace WatchList.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/User")]
     public class UserController
     {
         private readonly MovieContext _ctx;
@@ -29,10 +29,12 @@ namespace WatchList.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody]User value)
+        public int Post([FromBody]User value)
         {
             _ctx.Users.Add(value);
             _ctx.SaveChanges();
+
+            return value.Id;
         }
 
         [HttpPut("{id}")]

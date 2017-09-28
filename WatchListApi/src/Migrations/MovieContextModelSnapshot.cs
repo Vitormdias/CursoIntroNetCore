@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
-using WatchList.Models;
 using System;
+using WatchList.Models;
 
 namespace WatchList.Migrations
 {
@@ -18,7 +18,7 @@ namespace WatchList.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
 
-            modelBuilder.Entity("src.Models.Movie", b =>
+            modelBuilder.Entity("WatchList.Models.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -41,10 +41,12 @@ namespace WatchList.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("src.Models.User", b =>
+            modelBuilder.Entity("WatchList.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -62,11 +64,11 @@ namespace WatchList.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("src.Models.Movie", b =>
+            modelBuilder.Entity("WatchList.Models.Movie", b =>
                 {
-                    b.HasOne("src.Models.User", "User")
+                    b.HasOne("WatchList.Models.User", "User")
                         .WithMany("Movies")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
