@@ -16,6 +16,7 @@ namespace WatchList
     public class Startup
     {
         public IConfigurationRoot Configuration { get; set; }
+        public IHostingEnvironment Env { get; set; }
 
         public Startup(IHostingEnvironment env)
         {
@@ -25,12 +26,20 @@ namespace WatchList
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+            Env = env;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = Configuration.GetConnectionString("MovieContext");
-            services.AddDbContext<MovieContext>(options => options.UseSqlite(connection));
+            // services.AddDbContext<MovieContext>(options => options.UseSqlite(connection));
+            services.AddDbContext<MovieContext>(options => 
+            {
+              if (Env.IsDevelopment())
+                options.UseSqlite(connection);
+              else
+                options.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_URL"));
+            });
 
             services.AddMvc();
         }
