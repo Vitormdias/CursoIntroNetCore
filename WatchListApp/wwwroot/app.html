@@ -1,0 +1,15 @@
+<template>
+  <div class="container">
+    <nav class="navbar">
+        <a class="navbar-brand" href="/">Test App</a>
+        <ul class="row no-bullet">
+          <li repeat.for = "row of router.navigation" class="col-md-5">
+              <a href.bind = "row.href" class="nav-link">${row.title}</a>
+          </li>
+        </ul>
+    </nav>
+    <div class="app-background">
+      <router-view></router-view>
+    </div>
+  </div>
+</template>

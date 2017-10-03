@@ -1,0 +1,47 @@
+<template>
+    <h3>Users</h3>
+    <hr />
+    <button class="btn btn-success ${ editing ? 'hide' : '' }" click.trigger="editing = true">Novo</button>
+
+    <div class="${ editing ? '' : 'hide' }">
+        <h5>New</h5>
+        <div class="form-group">
+            <label for="name" class="col-md-4">Name</label>
+            <div class="col-md-8">
+                <input type="text" class="form-control" id="name" value.bind="user.name"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="col-md-4">Email</label>
+            <div class="col-md-8">
+                <input type="email" class="form-control" id="email" value.bind="user.email"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-success" click.trigger="save()">Save</button>
+            <button class="btn btn-danger" click.trigger="editing = false">Cancel</button>
+        </div>
+        <hr />
+    </div>
+
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr repeat.for="user of userList">
+                <td>${user.name}</td>
+                <td>${user.email}</td>
+                <td>
+                    <button class="btn btn-primary">Edit</button>
+                    <button class="btn btn-warning">Remove</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</template>
