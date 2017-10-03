@@ -14,12 +14,17 @@ namespace WatchList
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            var port = Environment.GetEnvironmentVariable("PORT") ?? "5001";
+
+            Console.WriteLine($"Using Url: {port}");
+
+            BuildWebHost(port, args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static IWebHost BuildWebHost(string port, string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
+                .UseUrls($"http://*:{port}/")
                 .Build();
     }
 }
