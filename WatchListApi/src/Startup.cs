@@ -32,13 +32,13 @@ namespace WatchList
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = Configuration.GetConnectionString("MovieContext");
-            // services.AddDbContext<MovieContext>(options => options.UseSqlite(connection));
+
             services.AddDbContext<MovieContext>(options => 
             {
               if (Env.IsDevelopment())
                 options.UseSqlite(connection);
               else
-                options.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_URL"));
+                options.UseInMemoryDatabase(databaseName: "MemoryDB");
             });
 
             services.AddMvc();
